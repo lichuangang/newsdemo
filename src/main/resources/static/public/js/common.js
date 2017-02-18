@@ -43,6 +43,16 @@ window.confirm = function(msg, callback){
 		}
 	});
 }
+/**
+ * 权限获取
+ */
+function hasPermission(permission) {
+    if (window.parent.myData.indexOf(permission) > -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 //选择一条记录
 function getSelectedRow() {

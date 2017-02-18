@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-@Repository
-public interface SysMenuRepository extends JpaRepository<SysMenu,Long>, JpaSpecificationExecutor<SysMenu>{
+import java.util.List;
 
+@Repository
+public interface SysMenuRepository extends JpaRepository<SysMenu, Long>, JpaSpecificationExecutor<SysMenu> {
+    List<SysMenu> findByTypeNot(Integer typye);
 }

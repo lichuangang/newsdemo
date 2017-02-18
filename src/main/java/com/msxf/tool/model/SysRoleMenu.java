@@ -21,6 +21,7 @@ public class SysRoleMenu implements Serializable{
 	public static final String TABLE_NAME = "sys_role_menu";
 
 	@Id
+    @GeneratedValue
 	@Column(name="id", nullable=false, length = 19)
 	private Long id;
 

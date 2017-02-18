@@ -1,8 +1,7 @@
 package ${basepackage}.service;
 
 import ${basepackage}.entity.BaseQuery;
-import ${basepackage}.entity.MsxfResult;
-import ${basepackage}.entity.PageResult;
+import ${basepackage}.entity.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,23 +19,25 @@ public class BaseService<T extends JpaRepository & JpaSpecificationExecutor, Q e
     /***
      * 通用分页查询
      */
-    public <S> MsxfResult getPage(Q query) {
-        PageResult<S> pageResult =new PageResult<>();
+    public R getPage(Q query) {
+        R result = R.ok();
+        try {
+            Page page = null;
+            if (query.where() == null) {
+                page = repository.findAll(query.getPageReq());
+            } else {
+                page = repository.findAll(query.where(), query.getPageReq());
+            }
+            HashMap<String, Object> pageResult = new HashMap<>();
+            pageResult.put("currPage", query.getPage());
+            pageResult.put("totalPage", page.getTotalPages());
+            pageResult.put("totalCount", page.getTotalElements());
+            pageResult.put("list", page.getContent());
+            result.put("page", pageResult);
 
-        Page<S> page = null;
-        if (query.where() == null) {
-            page = repository.findAll(query.getPageReq());
-        }else {
-            page = repository.findAll(query.where(), query.getPageReq());
+        } catch (Exception e) {
+            return R.error(e.getMessage());
         }
-
-        pageResult.setPageCount(page.getTotalPages());
-        pageResult.setTotal(page.getTotalElements());
-        pageResult.setPageList(page.getContent());
-
-        MsxfResult result = new MsxfResult();
-        result.setData(pageResult);
-
         return result;
     }
 

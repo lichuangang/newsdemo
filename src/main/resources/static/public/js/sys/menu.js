@@ -83,13 +83,7 @@ var vm = new Vue({
         }
     },
     methods: {
-        hasPermission: function (permission) {
-            if (window.parent.myData.indexOf(permission) > -1) {
-                return true;
-            } else {
-                return false;
-            }
-        },
+        //hasPermission: hasPermission,
         getMenu: function (menuId) {
             //加载菜单树
             $.get("../sys/menu/select", function (r) {
@@ -132,7 +126,7 @@ var vm = new Vue({
                     url: "../sys/menu/delete",
                     data: JSON.stringify(menuIds),
                     success: function (r) {
-                        if (r.code === 0) {
+                        if (r.code === 200) {
                             alert('操作成功', function (index) {
                                 vm.reload();
                             });
@@ -150,7 +144,7 @@ var vm = new Vue({
                 url: url,
                 data: JSON.stringify(vm.menu),
                 success: function (r) {
-                    if (r.code === 0) {
+                    if (r.code === 200) {
                         alert('操作成功', function (index) {
                             vm.reload();
                         });

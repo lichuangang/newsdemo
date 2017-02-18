@@ -24,6 +24,7 @@ public class SysMenu implements Serializable {
 
     @Id
     @Column(name = "menu_id", nullable = false, length = 19)
+    @GeneratedValue
     private Long menuId;
 
     @Column(name = "parent_id", nullable = true, length = 19)
@@ -38,6 +39,9 @@ public class SysMenu implements Serializable {
     @Column(name = "perms", nullable = true, length = 500)
     private String perms;
 
+    /**
+     * @类型 0：目录   1：菜单   2：按钮</p>
+     */
     @Column(name = "type", nullable = true, length = 10)
     private Integer type;
 
@@ -47,9 +51,23 @@ public class SysMenu implements Serializable {
     @Column(name = "order_num", nullable = true, length = 10)
     private Integer orderNum;
 
+    /**
+     * ztree属性
+     */
+    @Transient
+    private Boolean open;
+
     @Transient
     private List<SysMenu> list;
 
+
+    public Boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
+    }
 
     public List<SysMenu> getList() {
         return list;
@@ -136,8 +154,8 @@ public class SysMenu implements Serializable {
         this.type = value;
     }
 
-    /*
-     * @类型   0：目录   1：菜单   2：按钮</p>
+    /**
+     * <p>类型   0：目录   1：菜单   2：按钮</p>
      */
     public Integer getType() {
         return this.type;

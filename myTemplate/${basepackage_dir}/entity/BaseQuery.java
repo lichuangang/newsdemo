@@ -9,59 +9,63 @@ import org.springframework.util.StringUtils;
  * Created by chuangang.li on 2017/1/18.
  */
 public class BaseQuery<T> {
-    private int pageIndex = 0;
+    private int page = 1;
 
-    private int pageSize = 20;
+    private int rows = 10;
 
     private String keyword;
 
-    private String sort;
+    private String sord;
 
-    private boolean isAsc;
+    private String sidx;
 
     public PageRequest getPageReq() {
         //不排序
-        if (StringUtils.isEmpty(this.sort)) {
-            return new PageRequest(this.pageIndex, this.pageSize);
+        if (StringUtils.isEmpty(this.sidx)) {
+            return new PageRequest(this.page - 1, this.rows);
         }
         //需要排序，通用分页只支持单字段
-        return new PageRequest(this.pageIndex, this.pageSize, new Sort(this.isAsc ? Sort.Direction.ASC : Sort.Direction.DESC, this.sort));
+        return new PageRequest(this.page - 1, this.rows, new Sort(this.isAsc() ? Sort.Direction.ASC : Sort.Direction.DESC, this.sidx));
     }
 
     public Specification<T> where() {
         return null;
     }
 
-    public String getSort() {
-        return sort;
+    public String getSord() {
+        return sord;
     }
 
-    public void setSort(String sort) {
-        this.sort = sort;
+    public void setSord(String sort) {
+        this.sord = sort;
     }
 
     public boolean isAsc() {
-        return isAsc;
+        return "ASC".equals(this.sord.toUpperCase());
     }
 
-    public void setAsc(boolean asc) {
-        isAsc = asc;
+    public String getSidx() {
+        return sidx;
     }
 
-    public int getPageIndex() {
-        return pageIndex;
+    public void setSidx(String sidx) {
+        this.sidx = sidx;
     }
 
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
+    public int getPage() {
+        return page;
     }
 
-    public int getPageSize() {
-        return pageSize;
+    public void setPage(int page) {
+        this.page = page;
     }
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
     }
 
     public String getKeyword() {

@@ -2,12 +2,12 @@ package com.msxf.tool.controller;
 
 import com.msxf.tool.entity.R;
 import com.msxf.tool.entity.SysUserQuery;
-import com.msxf.tool.entity.MsxfResult;
 import com.msxf.tool.model.*;
+import com.msxf.tool.service.SysUserRoleService;
 import com.msxf.tool.utils.ShiroUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.springframework.stereotype.Service;
 import com.msxf.tool.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +21,77 @@ public class SysUserController {
 
     @Autowired
     SysUserService service;
+    @Autowired
+    SysUserRoleService userRoleService;
 
-    @RequestMapping(value = "sysUser", method = RequestMethod.GET)
-    public MsxfResult sysUser(SysUserQuery query) {
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public R sysUser(SysUserQuery query) {
         return service.getPage(query);
+    }
+
+
+    /**
+     * 保存用户
+     */
+    @RequestMapping("/save")
+    public R save(@RequestBody SysUser user) {
+        if (StringUtils.isBlank(user.getUsername())) {
+            return R.error("用户名不能为空");
+        }
+        if (StringUtils.isBlank(user.getPassword())) {
+            return R.error("密码不能为空");
+        }
+
+        service.save(user);
+
+        return R.ok();
+    }
+
+
+    /**
+     * 用户信息
+     */
+    @RequestMapping("/info/{userId}")
+    public R info(@PathVariable("userId") Long userId) {
+        SysUser user = service.findById(userId);
+
+        //获取用户所属的角色列表
+        List<Long> roleIdList = userRoleService.findRoleIds(userId);
+        user.setRoleIdList(roleIdList);
+
+        return R.ok().put("user", user);
+    }
+
+    /**
+     * 修改用户
+     */
+    @RequestMapping("/update")
+    public R update(@RequestBody SysUser user) {
+        if (StringUtils.isBlank(user.getUsername())) {
+            return R.error("用户名不能为空");
+        }
+
+        service.save(user);
+        return R.ok();
+    }
+
+
+    /**
+     * 删除用户
+     */
+    @RequestMapping("/delete")
+    public R delete(@RequestBody List<Long> userIds) {
+        if (userIds.contains(1L)) {
+            return R.error("系统管理员不能删除");
+        }
+
+        if (userIds.contains(ShiroUtils.getUserEntity().getUserId())) {
+            return R.error("当前用户不能删除");
+        }
+
+        service.deleteBatch(userIds);
+
+        return R.ok();
     }
 
 

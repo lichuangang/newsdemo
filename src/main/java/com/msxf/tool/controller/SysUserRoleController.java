@@ -1,5 +1,6 @@
 package com.msxf.tool.controller;
 
+import com.msxf.tool.entity.R;
 import com.msxf.tool.entity.SysUserRoleQuery;
 import com.msxf.tool.entity.MsxfResult;
 import com.msxf.tool.model.*;
@@ -15,7 +16,7 @@ public class SysUserRoleController{
     SysUserRoleService service;
 
     @RequestMapping(value = "sysUserRole", method = RequestMethod.GET)
-    public MsxfResult sysUserRole(SysUserRoleQuery query) {
+    public R sysUserRole(SysUserRoleQuery query) {
         return service.getPage(query);
     }
 

@@ -1,6 +1,7 @@
 package com.msxf.tool.model;
 
 import com.msxf.tool.utils.DataTypeUtils;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -14,33 +15,34 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "sys_config")
-public class SysConfig implements Serializable{
+public class SysConfig implements Serializable {
 
-	private static final long serialVersionUID = 5454155825314635342L;
+    private static final long serialVersionUID = 5454155825314635342L;
 
-	public static final String TABLE_NAME = "sys_config";
+    public static final String TABLE_NAME = "sys_config";
 
-	@Id
-	@Column(name="id", nullable=false, length = 19)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false, length = 19)
+    @GeneratedValue
+    private Long id;
 
-	@Column(name="key", nullable=true, length = 50)
-	private String key;
+    @Column(name = "t_key", nullable = true, length = 50)
+    private String key;
 
-	@Column(name="value", nullable=true, length = 2000)
-	private String value;
+    @Column(name = "t_value", nullable = true, length = 2000)
+    private String value;
 
-	@Column(name="status", nullable=true, length = 3)
-	private Integer status;
+    @Column(name = "status", nullable = true, length = 3)
+    private Integer status = 0;
 
-	@Column(name="remark", nullable=true, length = 500)
-	private String remark;
+    @Column(name = "remark", nullable = true, length = 500)
+    private String remark;
 
 
     /*
      * <p>id</p>
      */
-    public void setId(Long value){
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -54,7 +56,7 @@ public class SysConfig implements Serializable{
     /*
      * <p>key</p>
      */
-    public void setKey(String value){
+    public void setKey(String value) {
         this.key = value;
     }
 
@@ -68,7 +70,7 @@ public class SysConfig implements Serializable{
     /*
      * <p>value</p>
      */
-    public void setValue(String value){
+    public void setValue(String value) {
         this.value = value;
     }
 
@@ -82,7 +84,7 @@ public class SysConfig implements Serializable{
     /*
      * <p>状态   0：隐藏   1：显示</p>
      */
-    public void setStatus(Integer value){
+    public void setStatus(Integer value) {
         this.status = value;
     }
 
@@ -96,7 +98,7 @@ public class SysConfig implements Serializable{
     /*
      * <p>备注</p>
      */
-    public void setRemark(String value){
+    public void setRemark(String value) {
         this.remark = value;
     }
 
@@ -119,11 +121,11 @@ public class SysConfig implements Serializable{
     }
 
     public void updateFromMap(Map<String, Serializable> map) {
-        if(map.containsKey("id")) this.setId(DataTypeUtils.getLongValue(map.get("id")));
-        if(map.containsKey("key")) this.setKey(DataTypeUtils.getStringValue(map.get("key")));
-        if(map.containsKey("value")) this.setValue(DataTypeUtils.getStringValue(map.get("value")));
-        if(map.containsKey("status")) this.setStatus(DataTypeUtils.getIntegerValue(map.get("status")));
-        if(map.containsKey("remark")) this.setRemark(DataTypeUtils.getStringValue(map.get("remark")));
+        if (map.containsKey("id")) this.setId(DataTypeUtils.getLongValue(map.get("id")));
+        if (map.containsKey("key")) this.setKey(DataTypeUtils.getStringValue(map.get("key")));
+        if (map.containsKey("value")) this.setValue(DataTypeUtils.getStringValue(map.get("value")));
+        if (map.containsKey("status")) this.setStatus(DataTypeUtils.getIntegerValue(map.get("status")));
+        if (map.containsKey("remark")) this.setRemark(DataTypeUtils.getStringValue(map.get("remark")));
     }
 
 }

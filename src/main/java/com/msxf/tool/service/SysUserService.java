@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.msxf.tool.repository.SysUserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -21,6 +22,20 @@ public class SysUserService extends BaseService<SysUserRepository, SysUserQuery>
     SysMenuRepository sysMenuRepository;
     @Autowired
     SysRoleMenuRepository sysRoleMenuRepository;
+    @Autowired
+    SysUserRoleService userRoleService;
+    @Autowired
+    SysUserRoleRepository userRoleRepository;
+
+
+    public SysUser save(SysUser user) {
+        user.setCreateTime(new Date());
+        repository.save(user);
+        //保存关系
+        userRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+
+        return user;
+    }
 
     public SysUser findByUsername(String username) {
         return repository.findByUsername(username);
@@ -112,5 +127,13 @@ public class SysUserService extends BaseService<SysUserRepository, SysUserQuery>
         } else {
             return 0;
         }
+    }
+
+    @Transactional
+    public void deleteBatch(List<Long> userIds) {
+        //删用户
+        repository.deleteByUserIdIn(userIds);
+        //删除关系
+        userRoleRepository.deleteByUserIdIn(userIds);
     }
 }

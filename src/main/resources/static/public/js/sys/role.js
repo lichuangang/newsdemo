@@ -96,7 +96,7 @@ var vm = new Vue({
 				    url: "../sys/role/delete",
 				    data: JSON.stringify(roleIds),
 				    success: function(r){
-						if(r.code == 0){
+						if(r.code == 200){
 							alert('操作成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
@@ -134,7 +134,7 @@ var vm = new Vue({
 			    url: url,
 			    data: JSON.stringify(vm.role),
 			    success: function(r){
-			    	if(r.code === 0){
+			    	if(r.code === 200){
 						alert('操作成功', function(index){
 							vm.reload();
 						});

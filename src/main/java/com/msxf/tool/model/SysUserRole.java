@@ -1,6 +1,7 @@
 package com.msxf.tool.model;
 
 import com.msxf.tool.utils.DataTypeUtils;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -14,27 +15,28 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "sys_user_role")
-public class SysUserRole implements Serializable{
+public class SysUserRole implements Serializable {
 
-	private static final long serialVersionUID = 5454155825314635342L;
+    private static final long serialVersionUID = 5454155825314635342L;
 
-	public static final String TABLE_NAME = "sys_user_role";
+    public static final String TABLE_NAME = "sys_user_role";
 
-	@Id
-	@Column(name="id", nullable=false, length = 19)
-	private Long id;
+    @Id
+    @Column(name = "id", nullable = false, length = 19)
+    @GeneratedValue
+    private Long id;
 
-	@Column(name="user_id", nullable=true, length = 19)
-	private Long userId;
+    @Column(name = "user_id", nullable = true, length = 19)
+    private Long userId;
 
-	@Column(name="role_id", nullable=true, length = 19)
-	private Long roleId;
+    @Column(name = "role_id", nullable = true, length = 19)
+    private Long roleId;
 
 
     /*
      * <p>id</p>
      */
-    public void setId(Long value){
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -48,7 +50,7 @@ public class SysUserRole implements Serializable{
     /*
      * <p>用户ID</p>
      */
-    public void setUserId(Long value){
+    public void setUserId(Long value) {
         this.userId = value;
     }
 
@@ -62,7 +64,7 @@ public class SysUserRole implements Serializable{
     /*
      * <p>角色ID</p>
      */
-    public void setRoleId(Long value){
+    public void setRoleId(Long value) {
         this.roleId = value;
     }
 
@@ -83,9 +85,9 @@ public class SysUserRole implements Serializable{
     }
 
     public void updateFromMap(Map<String, Serializable> map) {
-        if(map.containsKey("id")) this.setId(DataTypeUtils.getLongValue(map.get("id")));
-        if(map.containsKey("userId")) this.setUserId(DataTypeUtils.getLongValue(map.get("userId")));
-        if(map.containsKey("roleId")) this.setRoleId(DataTypeUtils.getLongValue(map.get("roleId")));
+        if (map.containsKey("id")) this.setId(DataTypeUtils.getLongValue(map.get("id")));
+        if (map.containsKey("userId")) this.setUserId(DataTypeUtils.getLongValue(map.get("userId")));
+        if (map.containsKey("roleId")) this.setRoleId(DataTypeUtils.getLongValue(map.get("roleId")));
     }
 
 }

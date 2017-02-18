@@ -2,7 +2,22 @@
 <html>
 <head>
 <title>角色管理</title>
-#parse("sys/header.html")
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" href="../public/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../public/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+	<link rel="stylesheet" href="../public/plugins/ztree/css/metroStyle/metroStyle.css">
+	<link rel="stylesheet" href="../public/css/main.css">
+	<script src="../public/libs/jquery.min.js"></script>
+	<script src="../public/plugins/layer/layer.js"></script>
+	<script src="../public/libs/bootstrap.min.js"></script>
+	<script src="../public/libs/vue.min.js"></script>
+	<script src="../public/plugins/jqgrid/grid.locale-cn.js"></script>
+	<script src="../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+	<script src="../public/plugins/ztree/jquery.ztree.all.min.js"></script>
+	<script src="../public/js/common.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -13,15 +28,9 @@
 			</div>
 			<a class="btn btn-default" @click="query">查询</a>
 			
-			#if($shiro.hasPermission("sys:role:save"))
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			#end
-			#if($shiro.hasPermission("sys:role:update"))
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			#end
-			#if($shiro.hasPermission("sys:role:delete"))
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			#end
+			<a v-if="hasPermission('sys:role:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('sys:role:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('sys:role:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
@@ -57,6 +66,6 @@
 	</div>
 </div>
    
-<script src="${rc.contextPath}/js/sys/role.js?_${date.systemTime}"></script>    
+<script src="../public/js/sys/role.js"></script>
 </body>
 </html>

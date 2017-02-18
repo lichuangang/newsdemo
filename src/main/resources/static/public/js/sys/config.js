@@ -78,7 +78,7 @@ var vm = new Vue({
 				    url: "../sys/config/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
-						if(r.code == 0){
+						if(r.code == 200){
 							alert('操作成功', function(index){
 								vm.reload();
 							});
@@ -96,7 +96,7 @@ var vm = new Vue({
 			    url: url,
 			    data: JSON.stringify(vm.config),
 			    success: function(r){
-			    	if(r.code === 0){
+			    	if(r.code === 200){
 						alert('操作成功', function(index){
 							vm.reload();
 						});

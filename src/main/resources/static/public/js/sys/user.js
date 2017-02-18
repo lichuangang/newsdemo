@@ -93,7 +93,7 @@ var vm = new Vue({
 				    url: "../sys/user/delete",
 				    data: JSON.stringify(userIds),
 				    success: function(r){
-						if(r.code == 0){
+						if(r.code == 200){
 							alert('操作成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
@@ -111,7 +111,7 @@ var vm = new Vue({
 			    url: url,
 			    data: JSON.stringify(vm.user),
 			    success: function(r){
-			    	if(r.code === 0){
+			    	if(r.code === 200){
 						alert('操作成功', function(index){
 							vm.reload();
 						});

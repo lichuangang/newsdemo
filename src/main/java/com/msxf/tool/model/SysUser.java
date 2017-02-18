@@ -1,10 +1,14 @@
 package com.msxf.tool.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.msxf.tool.utils.DataTypeUtils;
+import com.msxf.tool.utils.DateUtils;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Date;
 
@@ -22,6 +26,7 @@ public class SysUser implements Serializable{
 
 	@Id
 	@Column(name="user_id", nullable=false, length = 19)
+    @GeneratedValue
 	private Long userId;
 
 	@Column(name="username", nullable=false, length = 50)
@@ -39,13 +44,29 @@ public class SysUser implements Serializable{
 	@Column(name="status", nullable=true, length = 3)
 	private Integer status;
 
+    @JsonFormat(timezone = "GMT+8", pattern = DateUtils.DATE_TIME_PATTERN)
 	@Column(name="create_time", nullable=true, length = 19)
 	private Date createTime;
 
 
-    /*
-     * <p>userId</p>
+    /**
+     * 角色ID列表
      */
+    @Transient
+    private List<Long> roleIdList;
+
+
+    public List<Long> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(List<Long> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
+
+    /*
+         * <p>userId</p>
+         */
     public void setUserId(Long value){
         this.userId = value;
     }
