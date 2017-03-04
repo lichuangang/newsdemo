@@ -50,7 +50,6 @@ public class HomeController {
         if (!captcha.equalsIgnoreCase(kaptcha)) {
             return R.error("验证码不正确");
         }
-
         try {
             Subject subject = ShiroUtils.getSubject();
             //sha256加密
